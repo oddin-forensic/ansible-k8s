@@ -1,0 +1,37 @@
+---
+- name: "Instalando dependencias"
+  apt:
+    update-cache: yes
+    cache_valid_time: 3600
+    name: "{{ item }}"
+    state: latest
+  become: true
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - software-properties-common
+    - gnupg2
+
+- name: "Adicionado GPC key do docker"
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: "Adicionando apt repository do docker"
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu
+    state: present
+
+- name: "Instalando docker"
+  apt:
+    update-cache: yes
+    name: "{{ item }}"
+    state: latest
+  become: true
+  with_items:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+  notify:
+    - restart docker

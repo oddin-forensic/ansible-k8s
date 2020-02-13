@@ -1,0 +1,9 @@
+---
+- hosts: kubernetes_master
+  roles:
+    - docker
+    # - kubernetes-master
+- hosts: kubernetes_slave
+  roles:
+    - docker
+    # - kubernetes-slave

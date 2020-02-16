@@ -48,13 +48,19 @@
 - name: "Pegando logs e token gerado"
   local_action: copy content={{ output.stdout }} dest=~/Documentos/odin_suite/ansible/{{ token_file }}
 
-- name: "Copiando arquivos necessarios"
-  shell: |
-    mkdir -p $HOME/.kube
-    sudo cp -f /etc/kubernetes/admin.conf $HOME/.kube/config
-    sudo chown $(id -u):$(id -g) $HOME/.kube/config
-  become: true
+- name: "Criando diretorio .kube"
+  file:
+    path: $HOME/.kube
+    state: directory
 
-- name: "Instalando pod network(flanel)"
-  command: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/2140ac876ef134e0ed5af15c65e414cf26827915/Documentation/kube-flannel.yml
-  become: true
+- name: "Copiando o arquivo de configuracao do k8s"
+  shell: sudo cp -f /etc/kubernetes/admin.conf $HOME/.kube/config
+
+- name: "Definindo permissoes"
+  shell: sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+- name: "Definindo a variavel de ambiente"
+  shell: export KUBECONFIG=/etc/kubernetes/kubelet.conf
+# - name: "Instalando pod network (flanel)"
+#   command: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+#   become: true

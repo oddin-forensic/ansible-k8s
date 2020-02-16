@@ -1,0 +1,20 @@
+ip_node_master: 192.168.0.115
+
+docker_dependencies:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - software-properties-common
+  - gnupg2
+  - python-pip
+
+kubernetes_dependencies:
+  - kubelet
+  - kubeadm
+  - kubectl
+
+token_file: join_token
+
+services:
+  - docker
+  - kubelet

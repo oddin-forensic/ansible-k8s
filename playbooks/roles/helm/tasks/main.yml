@@ -1,0 +1,11 @@
+---
+- name: "Baixando Helm"
+  get_url:
+    url: https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+    dest: "$HOME/get_helm.sh"
+
+- name: "Permissao helm"
+  shell: "chmod 700 get_helm.sh"
+
+- name: "Instalando helm"
+  shell: "sh get_helm.sh"

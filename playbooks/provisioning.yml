@@ -3,6 +3,7 @@
   roles:
     - docker
     - kubernetes-master
+    - helm
 - hosts: kubernetes_slave
   roles:
     - docker

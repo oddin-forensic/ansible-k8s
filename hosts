@@ -1,6 +1,6 @@
 [kubernetes_master]
-192.168.50.115 ansible_user=vagrant ansible_ssh_private_key_file=~/Documentos/odin_suite/ansible/.vagrant/machines/kubernetes_master/virtualbox/private_key
+192.241.140.142 ansible_user=root 
 
 [kubernetes_slave]
-192.168.50.116 ansible_user=vagrant ansible_ssh_private_key_file=~/Documentos/odin_suite/ansible/.vagrant/machines/kubernetes_slave/virtualbox/private_key
-192.168.50.116 ansible_user=vagrant ansible_ssh_private_key_file=~/Documentos/odin_suite/ansible/.vagrant/machines/kubernetes_slave/virtualbox/private_key
+157.245.132.146 ansible_user=root 
+64.227.0.29 ansible_user=root 

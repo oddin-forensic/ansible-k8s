@@ -1,0 +1,32 @@
+---
+- name: "Desabilitando swap"
+  shell: swapoff -a
+  become: true
+
+- name: "Adicionado GPC key do kubernetes"
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+  become: true
+
+- name: "Adicionando apt repository do kubernetes"
+  apt_repository:
+    repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+  become: true
+
+- name: "Instalando dependencias"
+  apt:
+    update-cache: yes
+    cache_valid_time: "3600"
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ kubernetes_dependencies }}"
+  become: true
+
+- name: "Startando serviços"
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items: "{{ services }}"

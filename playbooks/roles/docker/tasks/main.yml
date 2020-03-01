@@ -2,7 +2,7 @@
 - name: "Instalando dependencias"
   apt:
     update-cache: yes
-    cache_valid_time: 3600
+    cache_valid_time: "3600"
     name: "{{ item }}"
     state: latest
   with_items: "{{ docker_dependencies }}"

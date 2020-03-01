@@ -1,10 +1,11 @@
 ---
+- hosts: all
+  roles:
+    - docker
+    - prerequisites
 - hosts: kubernetes_master
   roles:
-    - docker
     - kubernetes-master
-    - helm
 - hosts: kubernetes_slave
   roles:
-    - docker
     - kubernetes-slave

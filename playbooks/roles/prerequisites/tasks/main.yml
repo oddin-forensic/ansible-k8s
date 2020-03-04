@@ -15,12 +15,21 @@
     state: present
   become: true
 
+- name: "Removendo dependencias"
+  apt:
+    name: "{{ item }}"
+    state: absent
+  with_items: 
+    - kubeadm
+    - kubectl
+    - kubelet
+  become: true
+
 - name: "Instalando dependencias"
   apt:
     update-cache: yes
     cache_valid_time: "3600"
     name: "{{ item }}"
-    state: latest
   with_items: "{{ kubernetes_dependencies }}"
   become: true
 

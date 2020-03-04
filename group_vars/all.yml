@@ -1,4 +1,4 @@
-ip_node_master: 192.168.50.115
+ip_node_master: 192.241.140.142
 
 docker_dependencies:
   - apt-transport-https
@@ -9,9 +9,9 @@ docker_dependencies:
   - python-pip
 
 kubernetes_dependencies:
-  - kubelet
-  - kubeadm
-  - kubectl
+  - kubelet=1.15.10-00
+  - kubeadm=1.15.10-00
+  - kubectl=1.15.10-00
 
 token_file: join_token
 

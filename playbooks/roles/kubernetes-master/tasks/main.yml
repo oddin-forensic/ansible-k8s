@@ -9,12 +9,12 @@
   become: true
 
 - name: "Iniciando cluster kubernetes"
-  shell: kubeadm init --apiserver-advertise-address {{ ip_node_master }} --pod-network-cidr=10.244.0.0/16
+  shell: kubeadm init --kubernetes-version=1.14.0 --apiserver-advertise-address {{ ip_node_master }} --pod-network-cidr=10.244.0.0/16
   register: output
   become: true
 
 - name: "Pegando logs e token gerado"
-  local_action: copy content={{ output.stdout }} dest=~/Documentos/odin_suite/ansible/{{ token_file }}
+  local_action: copy content={{ output.stdout }} dest=/home/juniordev/Documentos/oddin-suite/ansible-k8s/{{ token_file }}
 
 - name: "Criando diretorio .kube"
   file:

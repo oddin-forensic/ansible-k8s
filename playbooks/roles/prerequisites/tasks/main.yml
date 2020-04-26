@@ -4,19 +4,19 @@
   become: true
 
 - name: "Adicionado GPC key do kubernetes"
-  apt_key:
+  yum_key:
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
     state: present
   become: true
 
-- name: "Adicionando apt repository do kubernetes"
-  apt_repository:
+- name: "Adicionando yum repository do kubernetes"
+  yum_repository:
     repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
     state: present
   become: true
 
 - name: "Removendo dependencias"
-  apt:
+  yum:
     name: "{{ item }}"
     state: absent
   with_items: 
@@ -26,7 +26,7 @@
   become: true
 
 - name: "Instalando dependencias"
-  apt:
+  yum:
     update-cache: yes
     cache_valid_time: "3600"
     name: "{{ item }}"

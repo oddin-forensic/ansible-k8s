@@ -1,7 +1,7 @@
 ---
 - name: "Copiando token"
   copy:
-    src: /home/juniordev/Documentos/oddin-suite/ansible-k8s/{{ token_file }}
+    src: "{{ playbook_dir }}/{{ token_file }}"
     dest: /home/join_token
   become: true
 

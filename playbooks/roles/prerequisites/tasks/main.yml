@@ -3,17 +3,23 @@
   shell: swapoff -a
   become: true
 
-- name: "Adicionado GPC key do kubernetes"
-  yum_key:
-    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
-    state: present
-  become: true
+- name: Creating a repository file for Kubernetes
+  file:
+    path: /etc/yum.repos.d/kubernetes.repo
+    state: touch
 
-- name: "Adicionando yum repository do kubernetes"
-  yum_repository:
-    repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
-    state: present
-  become: true
+- name: Adding repository details in Kubernetes repo file.
+  blockinfile:
+    path: /etc/yum.repos.d/kubernetes.repo
+    block: |
+      [kubernetes]
+      name=Kubernetes
+      baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+      enabled=1
+      gpgcheck=0
+      repo_gpgcheck=0
+      gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
+       https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 
 - name: "Removendo dependencias"
   yum:
@@ -27,8 +33,9 @@
 
 - name: "Instalando dependencias"
   yum:
-    update-cache: yes
-    cache_valid_time: "3600"
+    disable_gpg_check: true
+    update_cache: yes
+#    cache_valid_time: "3600"
     name: "{{ item }}"
   with_items: "{{ kubernetes_dependencies }}"
   become: true

@@ -1,7 +1,7 @@
 ---
 - name: "Instalando dependencias"
   apt:
-    update-cache: yes
+    update_cache: yes
     cache_valid_time: "3600"
     name: "{{ item }}"
     state: latest
@@ -22,7 +22,7 @@
 
 - name: "Instalando docker"
   apt:
-    update-cache: yes
+    update_cache: yes
     name: "{{ item }}"
     state: latest
   become: true

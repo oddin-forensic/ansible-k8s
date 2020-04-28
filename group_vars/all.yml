@@ -1,4 +1,4 @@
-ip_node_master: 10.113.198.50
+ip_node_master: 192.241.140.142
 
 docker_dependencies:
   - apt-transport-https

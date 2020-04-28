@@ -9,7 +9,7 @@
   become: true
 
 - name: "Iniciando cluster kubernetes"
-  shell: kubeadm init --apiserver-advertise-address {{ ip_node_master }} --pod-network-cidr=10.244.0.0/16
+  shell: kubeadm init --apiserver-advertise-address {{ ip_node_master }} --pod-network-cidr=192.168.0.0/16
   register: output
   become: true
 

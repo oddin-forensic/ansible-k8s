@@ -3,6 +3,32 @@
   shell: swapoff -a
   become: true
 
+- name: Commenting Swap entries in /etc/fstab
+  replace:
+    path: /etc/fstab
+    regexp: '(.*swap*)'
+    replace: '#\1'
+
+- name: "Habilitando firewalld"
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+
+- name: Allow Network Ports in Firewalld
+  firewalld:
+    port: "{{ item }}"
+    state: enabled
+    permanent: yes
+    immediate: yes
+  with_items: "{{ ports }}"
+
+- name: Enabling Bridge Firewall Rule
+  shell: "echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables"
+
+- name: Enabling Bridge forward
+  shell: "echo '1' > /proc/sys/net/ipv4/ip_forward"
+
 - name: Creating a repository file for Kubernetes
   file:
     path: /etc/yum.repos.d/kubernetes.repo
@@ -21,15 +47,15 @@
       gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
        https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 
-- name: "Removendo dependencias"
-  yum:
-    name: "{{ item }}"
-    state: absent
-  with_items: 
-    - kubeadm
-    - kubectl
-    - kubelet
-  become: true
+#- name: "Removendo dependencias"
+#  yum:
+#    name: "{{ item }}"
+#    state: absent
+#  with_items: 
+#    - kubeadm
+#    - kubectl
+#    - kubelet
+#  become: true
 
 - name: "Instalando dependencias"
   yum:
